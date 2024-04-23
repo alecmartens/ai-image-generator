@@ -89,5 +89,7 @@ if __name__ == "__main__":
     if success:
         print("Images successfully generated for:", success)
     if failure:
-        print("Images not generated due to billing limit:", failure)
+        failure = [item for item in failure if item is not None]
+        if failure:
+            print("Images not generated due to billing limit:", failure)
 
