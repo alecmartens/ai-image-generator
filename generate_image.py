@@ -73,12 +73,21 @@ def generate_and_save_images(food_names, output_dir, formats=['png', 'jpg', 'hei
     return success_list, failure_list
 
 if __name__ == "__main__":
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
     input_str = input("Enter a list of food items, separated by commas: ")
     food_names = [name.strip() for name in input_str.split(',')]
-    output_dir = f'generated_images_{timestamp}'
+    
+    parent_dir = "generated_images"
+    
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir)
+    
+    output_dir = os.path.join(parent_dir, f'generated_images_{timestamp}')
+    
     success, failure = generate_and_save_images(food_names, output_dir)
+    
     if success:
         print("Images successfully generated for:", success)
     if failure:
         print("Images not generated due to billing limit:", failure)
+
