@@ -1,6 +1,6 @@
 # AI Image Generator
 
-This Python script generates images based on prompts provided by the user. It utilizes the OpenAI API to generate images and saves them to the local filesystem.
+This Python script generates images based on prompts provided by the user. It utilizes the DALL·E 3 OpenAI API to generate images and saves them to the local filesystem.
 
 ## Usage
 
