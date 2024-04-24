@@ -7,7 +7,6 @@ import time
 REQUESTS_PER_MINUTE_LIMIT = 3
 
 def fetch_image_from_dalle(prompt, api_key):
-    """Fetch an image from an API based on a text prompt."""
     url = "https://api.openai.com/v1/images/generations"
     headers = {
         'Authorization': f'Bearer {api_key}',
@@ -33,12 +32,10 @@ def fetch_image_from_dalle(prompt, api_key):
         raise Exception(f"API Error: {response.text}")
 
 def save_image(image_content, path):
-    """Save image to a file."""
     with open(path, 'wb') as f:
         f.write(image_content)
 
 def generate_and_save_images(food_names, output_dir, api_key):
-    """Generate and save images for a list of food names."""
     success_list = []
     failure_list = []
     if not os.path.exists(output_dir):
