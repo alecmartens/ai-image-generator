@@ -37,24 +37,6 @@ def save_image(image_content, path):
     with open(path, 'wb') as f:
         f.write(image_content)
 
-def convert_image_format(source_path, output_format):
-    if output_format == 'heic':
-        heif_file = pyheif.read(source_path)
-        img = Image.frombytes(
-            heif_file.mode, 
-            heif_file.size, 
-            heif_file.data,
-            "raw",
-            heif_file.mode,
-            heif_file.stride,
-        )
-        output_path = source_path.replace('.png', '.heic')
-        img.save(output_path, format='heic')
-    else:
-        img = Image.open(source_path)
-        output_path = source_path.replace('.png', f'.{output_format}')
-        img.save(output_path, format=output_format.upper())
-
 def generate_and_save_images(food_names, output_dir, api_key):
     """Generate and save images for a list of food names."""
     success_list = []
@@ -89,8 +71,8 @@ if __name__ == "__main__":
 
     output_dir = os.path.join(parent_dir, f'generated_images_{timestamp}')
     
-    formats = ['png', 'jpg', 'heic']
-    selected_format = input("Enter the file type to generate (png or jpg): ").lower() # note heic is not currently supported
+    formats = ['png', 'jpg']
+    selected_format = input("Enter the file type to generate (png or jpg): ").lower() 
     if selected_format not in formats:
         print("Invalid file type selected. Defaulting to PNG.")
         selected_format = 'png'
@@ -112,4 +94,6 @@ if __name__ == "__main__":
 
     for food in success:
         base_path = os.path.join(output_dir, f"{food}.png")
-        convert_image_format(base_path, selected_format)
+        img = Image.open(base_path)
+        output_path = base_path.replace('.png', f'.{selected_format}')
+        img.save(output_path, format=selected_format.upper())
